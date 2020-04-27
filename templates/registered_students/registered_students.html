@@ -1,0 +1,207 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+<div class="applicants">
+  {% include 'common/header.html' %}
+
+  <div class="row page-head">
+    <div class="col-md-6"> 
+      <h1>REGISTERED STUDENTS</h1>
+    </div>
+
+    <div class="col-md-6"> 
+      <!-- search -->
+      <form class="search">
+          <input type="search" name="search" id="search" placeholder="search for" value="{{search|default_if_none:""}}" onkeypress="if(event.keyCode==13)set_params_go({})" maxlength="100" />
+      </form>
+    </div>
+  </div>
+
+  <!-- Table Filters -->
+  <div class="row">
+    <div class="col-12">
+      <div class="filter-by">
+       <a class="a-btn clear-btn" href="/registered_students/">Reset Filter</a>
+        <form>
+         {% for field in dropform %}
+          <div class="div-col">
+             {{ field.errors }}
+             {{ field.label_tag }} {{ field }}
+             {% if field.help_text %}
+             <p class="help">{{ field.help_text|safe }}</p>
+             {% endif %}
+          </div>
+        {% endfor %}
+      </form>
+      </div>
+    </div>
+  </div>
+
+  <input type="hidden" id="gen" value="{{gender|default_if_none:"no"}}" />
+  <input type="hidden" id="std" value="{{standard|default_if_none:"no"}}" />
+  <input type="hidden" id="div" value="{{division|default_if_none:"no"}}" />
+
+  <!-- Student Data Table -->
+<div class="row">
+    <div class="col-12">
+            <div class="table-responsive">
+              <div class="common-table">
+               <table class="table frontend_pagination">
+                  <thead>
+                    <tr class="tr-head">
+                      <th class="xs-tcol">Sl.No</th>
+                      <th class="m-tcol">First Name</th>
+                      <th class="m-tcol">Middle Name</th>
+                      <th class="m-tcol">Last Name</th>
+                      <th class="s-tcol">Date of Birth</th>
+                      <th class="s-tcol">Age</th>
+                      <th class="s-tcol">Gender</th>
+                      <th class="m-tcol">Father's Name</th>
+                      <th class="m-tcol">Mother's Name</th>
+                      <th class="l-tcol">Address</th>
+                      <th class="m-tcol">Email</th>
+                      <th class="s-tcol">Contact No.</th>
+                      <th class="s-tcol">Class</th>
+                      <th class="s-tcol print-hide">Photo</th>
+                      <th class="s-tcol">Edit</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                   {% for student in students %}
+                    <tr class="tr-body"> 
+                        <td class="xs-tcol">{{forloop.counter0|add:students.start_index}}</td>
+                        <td class="m-tcol">{{student.firstname|default_if_none:'-'}}</td>
+                        <td class="m-tcol">{{student.middlename|default_if_none:'-'}}</td>
+                        <td class="m-tcol">{{student.lastname|default_if_none:'-'}}</td>
+                        <td class="s-tcol">{{student.dob|default_if_none:'-'}}</td>
+                        <td class="s-tcol">{{student.age|default_if_none:'-'}}</td>
+                        <td class="s-tcol">{{student.gender|default_if_none:'-'}}</td>
+                        <td class="m-tcol">{{student.father_name|default_if_none:'-'}}</td>
+                        <td class="m-tcol">{{student.mother_name|default_if_none:'-'}}</td>
+                        <td class="l-tcol">{{student.address|default_if_none:'-'}}</td>
+                        <td class="m-tcol">{{student.email|default_if_none:'-'}}</td>
+                        <td class="s-tcol">{{student.contact|default_if_none:'-'}}</td>
+                        <td class="s-tcol">{{student.standard|default_if_none:'-'}} {{student.division|default_if_none:'-'}}</td>
+                        <td class="s-tcol print-hide">
+                        {% if student.photo %}
+                          <img src="{{ student.photo.url }}" class="img_expand_btn" data-id="{{student.id}}" data-imgurl="{{student.photo.url}}">
+                        {% else %}
+                        -
+                        {% endif %}
+                        </td>
+                        <td class="s-tcol"><a href="{% url 'edit_student_form' student.id %}" class="a-btn edit-btn">Edit</a></td>
+                    </tr>
+                    {% empty %}
+                    <!-- no-data -->
+                    <tr class="no-data">
+                      <td colspan="15">No Data</td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table> 
+                <div class="paginated">
+                  {% if students.has_previous %}
+                      <a href="?page={{ students.previous_page_number }}&gender={{gender|default_if_none:""}}&standard={{standard|default_if_none:""}}&division={{division|default_if_none:""}}&search={{search|default_if_none:""}}"><button class="page-previous">Previous</button></a>
+                  {% else %}
+                      <button class="page-previous page-disabled">Previous</button>
+                  {% endif %}
+                  <div class="current">
+                      Page {{ students.number }} of {{ students.paginator.num_pages }}.
+                  </div>
+                    {% if students.has_next %}
+                      <a href="?page={{ students.next_page_number }}&gender={{gender|default_if_none:""}}&standard={{hotel_type1|default_if_none:""}}&division={{division|default_if_none:""}}&search={{search|default_if_none:""}}"><button class="page-next">Next</button></a>
+                    {% else %}
+                      <button class="page-next page-disabled">Next</button>
+                    {% endif %}           
+                  </div>
+              </div>
+          </div>
+    </div>
+  </div>
+
+  <!-- img_expand_popup -->
+  <div class="modal fade pop-up" id="img_expand_popup" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="body img-expand-popup">
+            <div class="modal-header">
+              <button type="button" class="close-btn" data-dismiss="modal" aria-label="Close">
+                <i class="fa fa-times" aria-hidden="true"></i>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="row"> 
+                <div class="col-12">
+                    <input type="hidden" id="img_expand_id" />
+                    <img id="img_expand_url" class="img-fluid">
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+ <!-- /img_expand_popup -->
+
+</div>
+
+{% endblock %}
+{% block javascript %}
+<script type="text/javascript">
+
+// search and filter 
+function set_params_go(args)
+{
+var url='{% url 'list_students' %}';
+var params={gender:$('#id_gender').val(),standard:$('#id_standard').val(),division:$('#id_division').val(),search:$('#search').val()
+};
+for(key in args)
+	params[key]=args[key];
+var query='';
+for(key in params)
+	if(params[key])
+		query+='&'+key+'='+params[key].toString();
+query=query.replace('&','?');
+console.log(query);
+window.location.href=url+query;
+}
+
+// gender dropdown change
+$(document).on('change', '#id_gender', function(e){
+  set_params_go({});
+});
+
+// standard dropdown change
+$(document).on('change', '#id_standard', function(e){
+  set_params_go({});
+})
+
+// division dropdown change
+$(document).on('change', '#id_division', function(e){
+  set_params_go({});
+})
+
+// Hold selected option in dropdowns
+$(document).ready(function(){
+  var gen = $('#gen').val();
+  var std = $('#std').val();
+  var div = $('#div').val();
+
+  if (gen !== 'no'){
+    $('#id_gender').val(gen).attr("selected","selected");
+    console.log('war');
+  }
+
+  if (std !== 'no'){
+    $('#id_standard').val(std).attr("selected","selected");
+    console.log('war2');
+  }
+
+  if (div !== 'no'){
+    $('#id_division').val(div).attr("selected","selected");
+  }
+
+});
+
+</script>
+{% endblock %}

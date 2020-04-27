@@ -1,0 +1,53 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="shortcut icon" type="image/ico" href="{% static 'files/images/favicon.ico' %}?v=1" />
+  <title>STUDENT REGISTRATION FORM</title>
+  <link href="{% static 'files/plugins/bootstrap4/css/bootstrap.min.css' %}" rel="stylesheet" type="text/css" />
+  <link href="{% static 'files/css/custom.css' %}?v=4" rel="stylesheet" type="text/css" /> 
+  <link href="{% static 'files/fonts/web-fonts/web-fonts.css' %}?v=1" rel="stylesheet" type="text/css" />
+  <link href="{% static 'files/fonts/font-awesome/css/font-awesome.min.css' %}?v=1" rel="stylesheet" type="text/css" />
+  <link href="{% static 'files/plugins/side-menu/side-menu.css' %}?v=3" rel="stylesheet" type="text/css" />
+  <link href="{% static 'files/plugins/datepicker/jquery-ui.css' %}?v=1" rel="stylesheet" type="text/css" />
+  <link href="{% static 'files/plugins/chosen-select/chosen.css' %}?v=1" rel="stylesheet" type="text/css" />
+  <script src="{% static 'files/js/jquery-3.3.1.min.js' %}?v=1" type="text/javascript"></script>
+  {% block xtra_css %}
+  {% endblock %}
+ </head>
+<body>
+ 
+    <div class="pre-loader">
+      <div class="loader-icon"></div>
+      <span>Loading...</span>
+    </div><!-- pre-loader -->
+
+     {% block content %}
+     {% endblock %}
+
+</div><!-- container-fluid, main-body -->
+
+ <!-- bootstrap --> 
+ <script src="{% static 'files/plugins/bootstrap4/js/bootstrap.min.js' %}?v=1" type="text/javascript"></script>
+ <!-- side-menu -->
+ <script src="{% static 'files/plugins/side-menu/side-menu.js' %}?v=1" type="text/javascript"></script>
+ <!-- datepicker -->
+ <script src="{% static 'files/plugins/datepicker/jquery-ui.js' %}?v=1" type="text/javascript"></script>
+ <!-- chosen-select -->
+ <script src="{% static 'files/plugins/chosen-select/chosen.jquery.js' %}?v=1" type="text/javascript"></script>
+ <!-- swipe-menu -->
+ <script src="{% static 'files/plugins/swipe-menu/swipe-menu.js' %}?v=1" type="text/javascript"></script>
+ <!-- pagination -->
+ <input type="hidden" id="max_rows">
+ <script src="{% static 'files/plugins/pagination/pagination_frontend.js' %}?v=1" type="text/javascript"></script>
+ <!-- common js -->
+ <script src="{% static 'files/js/custom.js' %}?v=3" type="text/javascript"></script>
+   {% block javascript %}
+   {% endblock %}
+   {% include 'common_messages.html' %}
+</body>
+</html>

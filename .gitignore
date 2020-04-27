@@ -1,0 +1,9 @@
+.DS_Store
+*/__pycache__/
+*.pyc
+db.sqlite3
+*/migrations/*
+db*
+!.gitignore
+!*/migrations/__init__.py
+/media

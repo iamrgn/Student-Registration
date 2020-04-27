@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+
+<!-- Registration Form -->
+<div class="app_form app_form_add">
+    {% include 'common/header.html' %}
+<div class="row">
+    <div class="col-12">
+      <div class="page-form page-form-center">
+     <form method="POST" action="{% url 'studentregister'%}" enctype="multipart/form-data" >{% csrf_token %}
+      <div class="page-form-head">
+          <h1>Registration Form</h1>
+       </div>
+       <div class="page-body">
+          <table>
+             {{student_form.as_table}}
+          </table>
+         </div>
+         <div class="page-footer text-center">
+            <button type="button" class="primary-btn" onclick="submitAnyForm(this);">Submit Form</button>
+         </div>
+        </form>
+     </div>   
+    </div>
+  </div>
+</div>
+<!-- /Registration_form -->
+
+{% endblock %}

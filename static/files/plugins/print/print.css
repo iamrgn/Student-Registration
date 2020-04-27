@@ -1,0 +1,22 @@
+/* screen */
+@media screen {
+.print-only {
+    display: none;}
+}
+
+/* screen, print  */
+@media screen, print {}
+
+/* print */
+@media print {
+/* none */
+.paginated,
+.btn-tcol,
+.print-hide {
+    display: none;}
+th {
+    font-weight: normal;}
+@page {
+    size: auto !important;}
+
+}

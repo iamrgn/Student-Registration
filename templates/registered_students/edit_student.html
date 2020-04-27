@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+<div class="app_form app_form_edit">
+{% include 'common/header.html' %}
+
+<!-- Edit Form -->
+<div class="row">
+    <div class="col-12">
+      <div class="page-form page-form-center">
+      <form method="POST" action="{% url 'edit_student_form' student.id %}" enctype="multipart/form-data">{% csrf_token %}     
+      <input type="hidden" name="section" value="edit" />
+      <div class="page-form-head">
+          <h1>Edit Application</h1>
+          {% if student.photo %}
+          <img class="choose_img_show" src="{{ student.photo.url }}" >
+          {% else %}
+          <img class="choose_img_show" src="{% static 'files/images/profile-icon.png' %}" >
+          {% endif %}
+       </div>
+       <div class="page-body">
+          <table>
+              {{edit_student_form.as_table}}
+          </table>
+         </div>
+         <div class="page-footer text-center">
+            <button type="button" class="delete-btn" data-toggle="modal" data-target="#delete_data_popup">Delete</button>
+            <button type="button" class="primary-btn" onclick="submitAnyForm(this);">Update</button>
+         </div>
+        </form>
+     </div>   
+    </div>
+  </div>
+
+<!-- delete_data_popup-->
+<div class="modal fade pop-up" id="delete_data_popup" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+       <form method="POST" action="" enctype="multipart/form-data">{% csrf_token %}
+         <input type="hidden" name="section" value="delete" />
+        <div class="body delete-popup">
+          <div class="modal-header">
+            <h1>Delete Student</h1>  
+          </div>
+          <div class="modal-body"> 
+            <div class="row">
+              <div class="col-12">
+                <h4>Are you sure you want to delete <b>{{student.firstname}} {{student.lastname}}</b> ?</h4>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="close-btn" data-dismiss="modal">Close</button>
+            <button type="button" class="primary-btn" onclick="submitAnyForm(this);">Delete</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- /delete_data_popup-->
+
+</div>
+{% endblock %}
