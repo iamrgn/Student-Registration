@@ -73,7 +73,7 @@
                         <td class="m-tcol">{{student.firstname|default_if_none:'-'}}</td>
                         <td class="m-tcol">{{student.middlename|default_if_none:'-'}}</td>
                         <td class="m-tcol">{{student.lastname|default_if_none:'-'}}</td>
-                        <td class="s-tcol">{{student.dob|default_if_none:'-'}}</td>
+                        <td class="s-tcol">{{student.dob|date:'d-m-Y'|default_if_none:'-'}}</td>
                         <td class="s-tcol">{{student.age|default_if_none:'-'}}</td>
                         <td class="s-tcol">{{student.gender|default_if_none:'-'}}</td>
                         <td class="m-tcol">{{student.father_name|default_if_none:'-'}}</td>

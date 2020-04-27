@@ -10,7 +10,6 @@ class StudentForm(forms.ModelForm):
         widgets = {
             'contact':forms.TextInput(attrs={'type':'text','max_length':'10','class':'only_allow_number'}),
             'age':forms.TextInput(attrs={'type':'text','class':'only_allow_number'}),
-            'photo':forms.FileInput(attrs={'type':'file','class':'choose_img'})
         } 
         help_texts = {
             'photo': 'Please upload passport size photo. Maximum resolution 1260 * 990 pixels.',
